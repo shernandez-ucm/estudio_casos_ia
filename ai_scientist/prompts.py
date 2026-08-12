@@ -17,13 +17,13 @@ Contexto actual:
 {context}
 """
 
-QUERY_FORMATTING_PROMPT = """Eres un asistente que prepara consultas para el endpoint Bulk Search de la API de Semantic Scholar.
+QUERY_FORMATTING_PROMPT = """Eres un asistente que prepara consultas para el endpoint Search API de la API de Semantic Scholar.
 Los artículos científicos indexados están mayoritariamente en inglés, por lo que las consultas deben quedar en ese idioma.
 
 Para cada consulta de la siguiente lista:
 1. Tradúcela al inglés.
 2. Simplifícala a sus 2-4 palabras clave (términos de contenido) más relevantes, eliminando artículos, preposiciones y palabras vacías.
-3. Une esas palabras clave con el operador AND (+) de la sintaxis de Bulk Search, sin espacios (ejemplo: "causal+inference+machine+learning").
+3. Une esas palabras clave con el operador AND (+), sin espacios (ejemplo: "causal+inference+machine+learning").
 
 Consultas originales:
 {queries}

@@ -8,10 +8,12 @@ Material de evaluación para la actividad curricular *Inteligencia Artificial* (
 .
 ├── ai_scientist/              # Paquete Python: sistema multi-agente
 │   ├── state.py                # Estado compartido del grafo (PresentationState)
-│   ├── config.py                # Configuración de LLMs (Ollama) y Semantic Scholar
+│   ├── config.py                # Configuración de LLMs (Ollama u OpenRouter) y Semantic Scholar
 │   ├── prompts.py                # Plantillas de prompt de cada agente
-│   ├── graph.py                  # Ensamblaje del grafo con LangGraph
-│   ├── main.py                    # Punto de entrada
+│   ├── json_utils.py              # Parseo tolerante de JSON devuelto por el LLM
+│   ├── status.py                   # Mensajes de estado/tarea de cada agente en consola
+│   ├── graph.py                     # Ensamblaje del grafo con LangGraph
+│   ├── main.py                       # Punto de entrada
 │   └── nodes/                      # Un agente por módulo
 │       ├── query_generation.py       # Agente 1: genera consultas de búsqueda
 │       ├── query_formatting.py       # Agente 2: formatea consultas para Semantic Scholar
@@ -27,8 +29,9 @@ Material de evaluación para la actividad curricular *Inteligencia Artificial* (
 ## Requisitos
 
 - Python 3.10+
-- [Ollama](https://ollama.com) corriendo localmente, con un modelo de chat descargado (p. ej. `ollama pull gemma4:12b-mlx` o el modelo que configures en `ai_scientist/config.py`)
-- (Opcional pero recomendado) una API key de [Semantic Scholar](https://www.semanticscholar.org/product/api) para evitar límites de tasa en las búsquedas
+- Un proveedor de LLM configurado (ver [Configuración](#configuración) más abajo): [Ollama](https://ollama.com) corriendo localmente (por defecto), o una API key de [OpenRouter](https://openrouter.ai)
+
+Las búsquedas se realizan sin autenticación contra el endpoint público de Semantic Scholar (Search API), por lo que no se requiere ninguna API key para esa parte. El tráfico no autenticado comparte un límite de tasa más bajo que el de las solicitudes con API key, así que si ejecutas el sistema con frecuencia podrías toparte con errores 429; en ese caso, reintenta más tarde.
 
 ## Instalación
 
@@ -47,17 +50,30 @@ pip install -r requirements.txt
 
 ## Configuración
 
-Crea un archivo `.env` en la raíz del proyecto (no se sube al repositorio) con tu API key de Semantic Scholar:
+`ai_scientist` soporta dos proveedores de LLM, seleccionados con la variable de entorno `LLM_PROVIDER` (por defecto `ollama`). Colócala, junto con las demás variables, en un archivo `.env` en la raíz del proyecto (no se sube al repositorio).
 
-```
-S2_API_KEY=tu_api_key_aqui
-```
-
-Verifica que Ollama esté corriendo y que el modelo configurado en `ai_scientist/config.py` esté descargado:
+**Opción A — Ollama (local, por defecto)**
 
 ```bash
-ollama list
+ollama list   # confirma que el modelo esté descargado
 ```
+
+```
+# .env
+LLM_PROVIDER=ollama
+OLLAMA_MODEL=qwen3.5:9b-mlx   # opcional; por defecto usa qwen3.5:9b-mlx
+```
+
+**Opción B — OpenRouter (API remota)**
+
+```
+# .env
+LLM_PROVIDER=openrouter
+OPENROUTER_API_KEY=tu_api_key_aqui
+OPENROUTER_MODEL=openai/gpt-4o-mini   # cualquier modelo listado en https://openrouter.ai/models
+```
+
+Si `LLM_PROVIDER=openrouter` y falta `OPENROUTER_API_KEY` u `OPENROUTER_MODEL`, `ai_scientist/config.py` falla de inmediato con un error explicativo al importar el paquete.
 
 ## Uso
 

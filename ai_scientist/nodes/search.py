@@ -1,11 +1,12 @@
 import requests
 
-from ..config import S2_API_KEY, S2_SEARCH_URL
+from ..config import S2_SEARCH_URL
 from ..state import PresentationState
+from ..status import agent_start, agent_status, agent_warning
 
 
 def execute_searches(state: PresentationState):
-    """Nodo 3: Ejecuta búsquedas reales en Semantic Scholar (Bulk Search)."""
+    """Nodo 3: Ejecuta búsquedas reales en Semantic Scholar (Search API, por relevancia)."""
     queries = state["queries"]
     current_context = state.get("context", [])
     current_references = state.get("references", [])
@@ -19,23 +20,24 @@ def execute_searches(state: PresentationState):
     # Cantidad de resultados a conservar por cada consulta (configurable en el estado)
     max_results = state.get("max_results_per_query", 10)
 
-    print(f"\n[Buscando en Semantic Scholar (Bulk Search)...]")
-
-    headers = {"X-API-KEY": S2_API_KEY} if S2_API_KEY else {}
+    agent_start(
+        3, "Búsqueda en Semantic Scholar",
+        f"Ejecutando {len(queries)} consulta(s) contra el Search API (hasta {max_results} resultado(s) c/u)...",
+    )
 
     for q in queries:
-        print(f" -> Consulta: {q}")
+        agent_status(f"Consulta: {q}")
         try:
-            # Ejecutar la búsqueda en el endpoint Bulk Search (no admite el parámetro 'limit')
-            # Ordenada por cantidad de citas descendente, filtrando papers poco citados
+            # Ejecutar la búsqueda en el endpoint Search API (por relevancia, no admite 'sort')
+            # Filtrando papers poco citados; limit=100 admite un margen para descartar los que no tengan abstract
+            # Sin autenticación: el endpoint admite acceso no autenticado (sujeto a límites de tasa compartidos)
             rsp = requests.get(
                 S2_SEARCH_URL,
-                headers=headers,
                 params={
                     "query": q,
                     "fields": "title,authors,year,abstract,url,citationCount",
-                    "sort": "publicationDate:desc",
                     "minCitationCount": "10",
+                    "limit": 100,
                 },
             )
             rsp.raise_for_status()
@@ -47,9 +49,10 @@ def execute_searches(state: PresentationState):
 
             if not papers:
                 # Si no hay resultados con abstract disponible para esa consulta
+                agent_warning(f"Sin resultados con abstract disponible para '{q}'.")
                 new_results.append(f"[Semantic Scholar] No se encontraron papers con abstract disponible para la consulta: '{q}'")
                 continue
-            print(f"   -> {len(papers)} resultados con abstract disponible (usando hasta {max_results}).")
+            agent_status(f"{len(papers)} resultado(s) con abstract disponible (usando hasta {max_results}).")
 
             # Conservar la lista de resultados (no solo el primero), hasta max_results
             for paper in papers[:max_results]:
@@ -93,7 +96,10 @@ def execute_searches(state: PresentationState):
 
         except requests.RequestException as e:
             # Manejo de errores de conexión o rate-limiting
+            agent_warning(f"Fallo al buscar '{q}': {str(e)}")
             new_results.append(f"[Error de Búsqueda] Fallo al buscar '{q}': {str(e)}")
+
+    agent_status(f"Total acumulado: {len(current_papers) + len(new_papers)} artículo(s) recopilado(s).")
 
     return {
         "context": current_context + new_results,

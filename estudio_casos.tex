@@ -168,21 +168,7 @@ Debe borrar esto e indicar si hay más restricciones en el trabajo, si no, sólo
   
 
  
- &\\
-   \textbf{Formato Entrega:}&\\
-	La presentación grupal debe ser de 10 minutos y debe mantener la siguiente estructura:
-	
-	  \begin{itemize}
-		\item Introducción a la temática seleccionada (Grupal).
-		\item Marco teórico de la temática seleccionada (Grupal).
-		\item Aplicaciones de la temática seleccionada (Grupal). 
-		\item Futuro y desafíos actuales sobre la temática seleccionada (Grupal).
-		\item Selección y revisión de un artículo bajo una mirada de pensamiento crítico (Individual). 
-	\end{itemize}
-	Una vez finalizada la presentación grupal, cada integrante debe presentar un artículo (1 diapositiva) demostrando capacidad de análisis, síntesis, evaluación y aplicación del conocimiento. 
-	
-	En total cada grupo dispone de 20 minutos para la presentación grupal e individual.
-
+ 
 
  &\\&\\\hline
 \end{tabular}
@@ -222,10 +208,11 @@ Debe borrar esto e indicar si hay más restricciones en el trabajo, si no, sólo
 \begin{tabular}{|p{\textwidth}|@{}c@{}}
 	\hline
 	\centering\cellcolor{cyan}\textbf{\color{white}ARQUITECTURA DEL SISTEMA MULTI-AGENTE \texttt{ai\_scientist}}&\\\hline
-La Figura~\ref{fig:ai-scientist-arch} ilustra el flujo de información entre los agentes y el estado compartido.
+La Figura  ilustra el flujo de información entre los agentes y el estado compartido.
 
-\begin{figure}[h!]
-\centering
+%\begin{figure}[H]
+%\centering
+\begin{center}
 \begin{tikzpicture}[
   scale=0.85, transform shape,
   node distance=0.85cm and 1.7cm,
@@ -262,9 +249,27 @@ La Figura~\ref{fig:ai-scientist-arch} ilustra el flujo de información entre los
 }
 
 \end{tikzpicture}
-\caption{Arquitectura del sistema multi-agente \texttt{ai\_scientist}: cada agente (nodo del grafo de LangGraph) lee y actualiza el estado compartido \texttt{PresentationState}; la condición \texttt{check\_iterations} decide si se repite el ciclo de búsqueda o se avanza al ranking y redacción final.}
+\end{center}
+%\captionof{figure}{Arquitectura del sistema multi-agente \texttt{ai\_scientist}: cada agente (nodo del grafo de LangGraph) lee y actualiza el estado compartido \texttt{PresentationState}; la condición \texttt{check\_iterations} decide si se repite el ciclo de búsqueda o se avanza al ranking y redacción final.}
+%\caption{Arquitectura del sistema multi-agente \texttt{ai\_scientist}: cada agente (nodo del grafo de LangGraph) lee y actualiza el estado compartido \texttt{PresentationState}; la condición \texttt{check\_iterations} decide si se repite el ciclo de búsqueda o se avanza al ranking y redacción final.}
 \label{fig:ai-scientist-arch}
-\end{figure}
+%\end{figure}
+
+&\\
+   \textbf{Formato Entrega:}&\\
+	La presentación grupal debe ser de 10 minutos y debe mantener la siguiente estructura:
+	
+	  \begin{itemize}
+		\item Introducción a la temática seleccionada (Grupal).
+		\item Marco teórico de la temática seleccionada (Grupal).
+		\item Aplicaciones de la temática seleccionada (Grupal). 
+		\item Futuro y desafíos actuales sobre la temática seleccionada (Grupal).
+		\item Selección y revisión de un artículo bajo una mirada de pensamiento crítico (Individual). 
+	\end{itemize}
+	Una vez finalizada la presentación grupal, cada integrante debe presentar un artículo (1 diapositiva) demostrando capacidad de análisis, síntesis, evaluación y aplicación del conocimiento. 
+	
+	En total cada grupo dispone de 20 minutos para la presentación grupal e individual.
+
 	&\\&\\\hline
 \end{tabular}
 

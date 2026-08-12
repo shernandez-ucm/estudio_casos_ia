@@ -3,10 +3,16 @@ from langchain_core.prompts import ChatPromptTemplate
 from ..config import llm
 from ..prompts import PRESENTATION_WRITING_PROMPT
 from ..state import PresentationState
+from ..status import agent_start, agent_status
 
 
 def write_presentation(state: PresentationState):
     """Nodo 4: Redacta la presentación siguiendo el esquema estricto e incorpora las referencias."""
+    agent_start(
+        5, "Redacción de Presentación",
+        "Redactando la presentación final a partir del contexto recopilado y el ranking de artículos...",
+    )
+
     context_str = "\n\n".join(state["context"])
 
     prompt = ChatPromptTemplate.from_template(PRESENTATION_WRITING_PROMPT)
@@ -38,5 +44,7 @@ def write_presentation(state: PresentationState):
         f"# Referencias\n\n"
         f"{references_str}\n"
     )
+
+    agent_status(f"Presentación redactada ({len(presentation)} caracteres, {len(references)} referencia(s)).")
 
     return {"presentation": presentation}

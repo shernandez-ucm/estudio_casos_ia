@@ -6,9 +6,19 @@ from langchain_openai import ChatOpenAI
 
 load_dotenv()
 
+# Proveedor de búsqueda bibliográfica: "semantic_scholar" (por defecto) u "openalex"
+SEARCH_PROVIDER = os.getenv("SEARCH_PROVIDER", "semantic_scholar").lower()
+if SEARCH_PROVIDER not in ("semantic_scholar", "openalex"):
+    raise RuntimeError(f"SEARCH_PROVIDER '{SEARCH_PROVIDER}' no reconocido; use 'semantic_scholar' u 'openalex'.")
+
 # Cliente API de Semantic Scholar, sin autenticación (ver https://github.com/allenai/s2-folks)
 # Search API (relevance search): https://api.semanticscholar.org/api-docs/#tag/Paper-Data/operation/get_graph_get_paper_search
 S2_SEARCH_URL = "https://api.semanticscholar.org/graph/v1/paper/search"
+
+# Cliente API de OpenAlex, sin autenticación (ver https://help.openalex.org/quickstart/)
+OPENALEX_SEARCH_URL = "https://api.openalex.org/works"
+# Correo opcional que habilita el "polite pool" de OpenAlex (mejor límite de tasa y confiabilidad)
+OPENALEX_MAILTO = os.getenv("OPENALEX_MAILTO")
 
 # Proveedor de LLM: "ollama" (por defecto, local) u "openrouter" (API remota vía OpenRouter.ai)
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama").lower()

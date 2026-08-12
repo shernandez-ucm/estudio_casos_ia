@@ -31,7 +31,7 @@ Material de evaluación para la actividad curricular *Inteligencia Artificial* (
 - Python 3.10+
 - Un proveedor de LLM configurado (ver [Configuración](#configuración) más abajo): [Ollama](https://ollama.com) corriendo localmente (por defecto), o una API key de [OpenRouter](https://openrouter.ai)
 
-Las búsquedas se realizan sin autenticación contra el endpoint público de Semantic Scholar (Search API), por lo que no se requiere ninguna API key para esa parte. El tráfico no autenticado comparte un límite de tasa más bajo que el de las solicitudes con API key, así que si ejecutas el sistema con frecuencia podrías toparte con errores 429; en ese caso, reintenta más tarde.
+Las búsquedas se realizan sin autenticación contra un proveedor bibliográfico público ([Semantic Scholar](https://www.semanticscholar.org/product/api) u [OpenAlex](https://help.openalex.org/quickstart/)), por lo que no se requiere ninguna API key para esa parte. El tráfico no autenticado comparte un límite de tasa más bajo que el de las solicitudes autenticadas, así que si ejecutas el sistema con frecuencia podrías toparte con errores 429; `ai_scientist/nodes/search.py` reintenta automáticamente con backoff exponencial ante ese error.
 
 ## Instalación
 
@@ -75,20 +75,38 @@ OPENROUTER_MODEL=openai/gpt-4o-mini   # cualquier modelo listado en https://open
 
 Si `LLM_PROVIDER=openrouter` y falta `OPENROUTER_API_KEY` u `OPENROUTER_MODEL`, `ai_scientist/config.py` falla de inmediato con un error explicativo al importar el paquete.
 
+`ai_scientist` también soporta dos proveedores de búsqueda bibliográfica, seleccionados con la variable de entorno `SEARCH_PROVIDER` (por defecto `semantic_scholar`).
+
+**Opción A — Semantic Scholar (por defecto)**
+
+```
+# .env
+SEARCH_PROVIDER=semantic_scholar
+```
+
+**Opción B — OpenAlex**
+
+```
+# .env
+SEARCH_PROVIDER=openalex
+OPENALEX_MAILTO=tu_correo@ejemplo.com   # opcional; habilita el "polite pool" (mejor límite de tasa)
+```
+
 ## Uso
 
-Ejecuta el sistema multi-agente desde la raíz del proyecto (como módulo, no como script suelto):
+Ejecuta el sistema multi-agente desde la raíz del proyecto (como módulo, no como script suelto), pasando el tópico a investigar como argumento:
 
 ```bash
-python -m ai_scientist.main
+python -m ai_scientist.main "Aplicaciones de la Causalidad en Inteligencia Artificial"
+
+# Opcionalmente, ajusta la cantidad de iteraciones de búsqueda y resultados por consulta
+python -m ai_scientist.main "Aplicaciones de la Causalidad en Inteligencia Artificial" --max-iterations 3 --max-results-per-query 5
 ```
 
 Esto genera dos archivos en la raíz del proyecto:
 
 - `presentacion_universitaria.md`: la presentación en formato Markdown.
 - `referencias.md`: las referencias bibliográficas recopiladas.
-
-Para investigar un tópico distinto, edita el argumento de `run()` en `ai_scientist/main.py`.
 
 ## Compilar el enunciado (LaTeX)
 

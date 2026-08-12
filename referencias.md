@@ -1,3 +1,3 @@
-# Referencias: Aplicaciones de la Causalidad en Inteligencia Artificial
+# Referencias: Etica y Seguridad de la IA
 
 No se registraron referencias.

@@ -1,0 +1,356 @@
+\documentclass[12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{fourier}
+\usepackage{multirow,longtable}
+\usepackage{stackengine,amsmath,amsfonts,amssymb,braket}
+\usepackage{gensymb,wrapfig,enumitem}
+\usepackage[pdfborder={0 0 0},colorlinks=true]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage[usegeometry]{typearea}% before geometry!
+\usepackage[letterpaper,top=1.16in,left=1.18in,headheight=1in]{geometry}
+
+% --- ABOUT -----
+% Formato proyectos para UCM (ver. 1.0)
+% -by Javier Rojas (jerojas@ucm.cl)
+
+% --- Rellenar datos del encabezado
+\title{Tendencias Actuales en IA} % Titulo del proyecto
+\newcommand{\evaltitle}{EVALUACIÓN 1 --10\%} % Evaluación
+
+\newcommand{\carrera}{Ingeniería Civil Informática} % Carrera
+\newcommand{\acurricular}{Inteligencia Artificial} %Actividad Curricular
+\newcommand{\academico}{Sergio Hernández} % Academico
+\newcommand{\fentrega}{26 de Agosto} % Fecha de Entrega
+
+\newcommand{\pmax}{80} % Puntaje máximo
+\newcommand{\pcorte}{48} % Puntaje de Corte
+
+\newcommand{\reglas}{% Inserte las reglas
+	\item El trabajo debe presentarse en forma grupal e individual.
+	\item Etiquetar y titular figuras y tablas. Las figuras, por ejemplo, deben llamarse Figura 1, Figura 2,
+	etc. (o incluir el número de sección, como Figura 1.3 para la tercera figura de la sección 1) con
+	un breve título descriptivo para cada una. Luego, podrás consultarlos fácilmente en el texto.
+	Hacer referencia a figuras y tablas por su nombre evita cualquier ambigüedad que algo como
+	la figura de arriba pueda introducir.
+	\item Las figuras deben estar centradas en la página con un título centrado debajo de ellas. Poner el
+	título en cursiva ayuda a que se destaque visualmente del resto del texto. Considere el tamaño
+	de cada figura: no deben ser tan pequeñas que los detalles sean difíciles de discernir, ni deben
+	ser más grandes de lo necesario para ver claramente todos los detalles, ya que eso desperdicia
+	espacio en la página.
+	\item Al incluir código o salida de terminal (transcripción de shell) en un documento, formatéelo con
+	una fuente monoespaciada. Consolas, DejaVu Sans Mono y Menlo son buenas opciones que se
+	encuentran comúnmente disponibles.
+	\item No incluya código, graficos, tablas ni una transcripción del shell como captura de pantalla
+	del código de una página web, editor de texto o terminal. Hacer esto produce una imagen
+	rasterizada del texto que será de baja resolución, pixelada, imposible de resaltar y copiar, e
+	inaccesible para cualquiera que utilice un software de lectura de pantalla.
+	
+}
+
+\newcommand{\restricciones}{% Inserte restricciones del proyecto
+Se aplicará artículo 67º del reglamento del estudiante, el cual indica que, en caso de sorprender copia parcial o exacta, ya sea entre compañeros o reproducidos de algún medio, lo cual implica un 1,0 para todos los involucrados.
+Si hay algún requerimiento sin contestar, y en la rúbrica no se puede observar, no aplica puntaje.
+Debe borrar esto e indicar si hay más restricciones en el trabajo, si no, sólo dejar las primeras.
+}
+
+\newcommand{\raprendizaje}{Conocer la historia y el contexto de la inteligencia artificial considerando la multiplicidad de opciones de aplicación en la
+	ingeniería.}
+\newcommand{\ievaluacion}{
+	\begin{itemize}
+	\item Expone historia de la inteligencia artificial.
+	\item Describe el contexto de la inteligencia artificial.
+	\item Identifica tendencias de la inteligencia artificial.
+	\end{itemize}
+	}
+
+%--- INICIO :: Sección de formato (NO MODIFICAR)
+
+\newcommand*{\useportrait}{%
+  \clearpage
+  \KOMAoptions{paper=portrait,DIV=current}%switch to portrait
+  \newgeometry{% geometry settings for portrait
+    letterpaper, left=1.18in, top=1.16in, headheight=1in
+  }%
+  \fancyhfoffset{0pt}% <- recalculate head and foot width for fancyhdr
+}
+\newcommand*{\uselandscape}{%
+  \clearpage
+  \KOMAoptions{paper=landscape,DIV=current}%switch to landscape
+  \newgeometry{% geometry settings for landscap
+    letterpaper, left=1.18in, top=1.16in, headheight=1in
+  }%
+  \fancyhfoffset{0pt}% recalculate head and foot width for fancyhdr
+}
+
+\fancyhead{}
+\fancyhead[L]{\includegraphics[height=0.6in]{Logo UCM.png}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+{
+  \makeatletter
+  \noindent%
+  \begin{center}
+    {\Large\bf
+      \MakeUppercase{\evaltitle}\\%
+      ESTUDIO DE CASO\\%
+      \MakeUppercase{``\@title''}%
+    }
+  \end{center}
+  \vspace{0.5cm}
+  \noindent
+  \begin{tabular}{|p{0.3\textwidth}|p{0.69\textwidth}|}
+    \hline
+    \cellcolor{cyan}\textbf{\color{white}Nombre de los Integrantes}&  \\\hline
+    \cellcolor{cyan}\textbf{\color{white}Fecha de Entrega}& \fentrega \\\hline
+    \cellcolor{cyan}\textbf{\color{white}Carrera}& \carrera \\\hline
+    \cellcolor{cyan}\textbf{\color{white}Académico}& \academico \\\hline
+    \cellcolor{cyan}\textbf{\color{white}Actividad Curricular}&\acurricular \\\hline
+  \end{tabular}
+  \vspace{0.5cm}\\
+  \noindent
+  \begin{tabular}{|p{0.12\textwidth}|p{0.06\textwidth}|p{0.13\textwidth}|p{0.06\textwidth}|p{0.13\textwidth}|p{0.06\textwidth}|p{0.18\textwidth}|p{0.08\textwidth}|}
+    \hline
+    \cellcolor{cyan}\textbf{\color{white}PUNTAJE\newline MÁXIMO}&\pmax&\cellcolor{cyan}\textbf{\color{white}PUNTAJE\newline DE CORTE}&\pcorte&\cellcolor{cyan}\textbf{\color{white}PUNTAJE\newline OBTENIDO}&&\cellcolor{cyan}\textbf{\color{white}CALIFICACIÓN}&\\\hline
+  \end{tabular}
+  \vspace{0.5cm}\\
+  \noindent
+  \begin{tabular}{|p{0.25\textwidth}|p{0.74\textwidth}|}
+    \hline
+    \cellcolor{cyan}\textbf{\color{white}Resultados de Aprendizajes Evaluados:}&\raprendizaje\\\hline
+    \cellcolor{cyan}\textbf{\color{white}Indicadores de\newline Evaluación:}&\ievaluacion\\\hline
+  \end{tabular}\\\vspace{0.1cm}
+  \newpage
+  \begin{longtable}{|p{1.019\textwidth}|@{}c@{}}
+    \hline
+    \centering\cellcolor{cyan}\textbf{\color{white}INSTRUCCIONES PARA EL DESRROLLO DE LA EVALUACIÓN}&\\\hline
+    {\small
+      \vspace{7pt}Para el desarrollo de su evaluación debe considerar lo siguiente:%
+      \setlist[enumerate]{itemsep=0pt,parsep=0pt,partopsep=0pt,topsep=0pt}
+      \begin{enumerate}
+        \reglas
+      \end{enumerate}
+    }&\\
+    {\small
+      \setlist[enumerate]{}
+      \underline{Restricciones}\newline
+      \noindent\restricciones
+    }&\\\hline
+  \end{longtable}
+}
+
+%--- FIN :: Sección de formato (NO MODIFICAR)
+\newpage
+\noindent
+\begin{tabular}{|p{\textwidth}|@{}c@{}}
+  \hline
+  \centering\cellcolor{cyan}\textbf{\color{white}DESCRIPCIÓN DEL CASO Y DE LAS PREGUNTAS O REQUERIMIENTOS A SER RESUELTOS}&\\\hline
+  \textbf{Caso:}&\\
+  Los sistemas multi-agente (MAS, por sus siglas en inglés) son sistemas compuestos por múltiples agentes autónomos que interactúan entre sí y con su entorno. En el contexto de la inteligencia artificial (IA), un agente es una entidad que percibe su entorno a través de sensores y actúa sobre él utilizando actuadores, con el objetivo de alcanzar ciertos objetivos o cumplir tareas específicas. Los agentes pueden ser software, robots, o una combinación de ambos. Por ejemplo, el proyecto AI Scientist \url{https://www.nature.com/articles/s41586-026-10265-5} es un sistema completamente automatizado para la generación de artículos científicos de principio a fin, habilitado por los recientes avances en modelos fundacionales. El modelo tiene cuatro procesos principales:
+  
+  \begin{enumerate}
+  \item Generación de Ideas: Dado un código base inicial, el sistema "lluvia de ideas" para explorar nuevas direcciones de investigación. Verifica la novedad de sus ideas buscando en bases de datos como Semantic Scholar.
+  
+  \item Iteración Experimental: Ejecuta los experimentos propuestos, genera gráficos para visualizar los resultados y documenta cada uno para facilitar la escritura del artículo.
+  
+  \item Redacción del Artículo: Produce un informe claro y conciso, citando de manera autónoma artículos relevantes.
+  
+  \item Revisión Automatizada de Artículos: Utiliza un revisor automático basado en un LLM (modelo de lenguaje grande) para evaluar los artículos generados con una precisión cercana a la humana. Estos comentarios se utilizan para mejorar el proyecto o como retroalimentación para futuras ideas.
+  \end{enumerate}
+ 	 
+  
+
+ 
+ &\\
+   \textbf{Formato Entrega:}&\\
+	La presentación grupal debe ser de 10 minutos y debe mantener la siguiente estructura:
+	
+	  \begin{itemize}
+		\item Introducción a la temática seleccionada (Grupal).
+		\item Marco teórico de la temática seleccionada (Grupal).
+		\item Aplicaciones de la temática seleccionada (Grupal). 
+		\item Futuro y desafíos actuales sobre la temática seleccionada (Grupal).
+		\item Selección y revisión de un artículo bajo una mirada de pensamiento crítico (Individual). 
+	\end{itemize}
+	Una vez finalizada la presentación grupal, cada integrante debe presentar un artículo (1 diapositiva) demostrando capacidad de análisis, síntesis, evaluación y aplicación del conocimiento. 
+	
+	En total cada grupo dispone de 20 minutos para la presentación grupal e individual.
+
+
+ &\\&\\\hline
+\end{tabular}
+
+\newpage
+\noindent
+\begin{tabular}{|p{\textwidth}|@{}c@{}}
+	\hline
+	\centering\cellcolor{cyan}\textbf{\color{white}ARQUITECTURA DEL SISTEMA MULTI-AGENTE \texttt{ai\_scientist}}&\\\hline
+
+\textbf{REQUERIMIENTOS:}
+  \vspace{3pt} Utilizar el sistema multi-agente implementado en el paquete \texttt{ai\_scientist/} (basado en \textbf{LangChain}/\textbf{LangGraph}) para la elaboración de una presentación sobre temas actuales de IA. El trabajo se centrará en los items 1, 3 y 4 de la metodología descrita anteriormente. La arquitectura del sistema y la organización de sus módulos se describe en la Figura~\ref{fig:ai-scientist-arch}.\\
+
+\begin{itemize}
+	\item \texttt{state.py}: define el estado compartido del grafo (\texttt{PresentationState}), es decir, la información que fluye y se acumula entre agentes: tópico, consultas, contexto recopilado, referencias, resúmenes, artículos, ranking e iteraciones.
+	\item \texttt{config.py}: configura los modelos de lenguaje locales servidos por Ollama y los parámetros de acceso a la API de Semantic Scholar.
+	\item \texttt{prompts.py}: contiene las plantillas de \textit{prompt} utilizadas por cada agente del sistema.
+	\item \texttt{nodes/}: implementa cada agente como una función independiente que recibe y actualiza el estado compartido:
+	\begin{itemize}
+		\item \texttt{query\_generation.py} -- Agente 1: genera consultas de búsqueda a partir del tópico y el contexto ya recopilado.
+		\item \texttt{query\_formatting.py} -- Agente 2: traduce y formatea las consultas según la sintaxis del endpoint \textit{Bulk Search} de Semantic Scholar.
+		\item \texttt{search.py} -- Agente 3: ejecuta las búsquedas en Semantic Scholar y estructura los artículos obtenidos.
+		\item \texttt{ranking.py} -- Agente 4: rankea los artículos recopilados según citas, impacto y relevancia semántica.
+		\item \texttt{writing.py} -- Agente 5: redacta la presentación final integrando el ranking y las referencias.
+	\end{itemize}
+	\item \texttt{graph.py}: ensambla los agentes anteriores en un \texttt{StateGraph} de LangGraph, definiendo el flujo y la condición de iteración (\texttt{check\_iterations}).
+	\item \texttt{main.py}: punto de entrada que invoca al grafo compilado y guarda la presentación y las referencias generadas.
+\end{itemize}
+
+
+
+	&\\&\\\hline
+\end{tabular}
+
+\newpage
+\noindent
+\begin{tabular}{|p{\textwidth}|@{}c@{}}
+	\hline
+	\centering\cellcolor{cyan}\textbf{\color{white}ARQUITECTURA DEL SISTEMA MULTI-AGENTE \texttt{ai\_scientist}}&\\\hline
+La Figura~\ref{fig:ai-scientist-arch} ilustra el flujo de información entre los agentes y el estado compartido.
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[
+  scale=0.85, transform shape,
+  node distance=0.85cm and 1.7cm,
+  agent/.style={rectangle, rounded corners, draw=cyan!70!black, fill=cyan!10, thick, minimum width=3.4cm, minimum height=1.05cm, align=center, font=\small},
+  decision/.style={diamond, draw=orange!80!black, fill=orange!10, thick, aspect=2.6, align=center, font=\footnotesize, inner sep=1pt},
+  terminal/.style={rectangle, rounded corners=8pt, draw=black!60, fill=gray!10, thick, minimum width=3cm, minimum height=0.9cm, align=center, font=\small},
+  state/.style={rectangle, draw=violet!70!black, fill=violet!8, dashed, thick, minimum width=3.6cm, minimum height=2.6cm, align=center, font=\scriptsize},
+  arr/.style={-{Stealth[length=2.2mm]}, thick},
+]
+
+\node[terminal] (start) {Tópico de\\ investigación};
+\node[agent, below=of start] (plan) {Agente 1: \texttt{query\_generation}\\Generación de Consultas};
+\node[agent, below=of plan] (format) {Agente 2: \texttt{query\_formatting}\\Formateo de Consultas};
+\node[agent, below=of format] (search) {Agente 3: \texttt{search}\\Búsqueda Semantic Scholar};
+\node[decision, below=1.1cm of search] (cond) {\textquestiondown Iteraciones\\ completas?};
+\node[agent, below=1.1cm of cond] (rank) {Agente 4: \texttt{ranking}\\Ranking y Resumen};
+\node[agent, below=of rank] (write) {Agente 5: \texttt{writing}\\Redacción de Presentación};
+\node[terminal, below=of write] (endnode) {Presentación +\\ Referencias};
+
+\node[state, right=3.4cm of search] (state) {\textbf{Estado compartido}\\ \texttt{PresentationState}\\[3pt] queries, context,\\ references, abstracts,\\ papers, ranked\_summary,\\ presentation, iterations};
+
+\draw[arr] (start) -- (plan);
+\draw[arr] (plan) -- (format);
+\draw[arr] (format) -- (search);
+\draw[arr] (search) -- (cond);
+\draw[arr] (cond) -- (rank) node[midway, right] {Sí};
+\draw[arr] (rank) -- (write);
+\draw[arr] (write) -- (endnode);
+
+\draw[arr] (cond.west) -- ++(-2.2,0) node[midway, above] {No} |- (plan.west);
+
+\foreach \n in {plan, format, search, rank, write} {
+  \draw[-{Stealth[length=1.6mm]}, violet!55!black, dashed] (state.west) to[bend right=8] (\n.east);
+}
+
+\end{tikzpicture}
+\caption{Arquitectura del sistema multi-agente \texttt{ai\_scientist}: cada agente (nodo del grafo de LangGraph) lee y actualiza el estado compartido \texttt{PresentationState}; la condición \texttt{check\_iterations} decide si se repite el ciclo de búsqueda o se avanza al ranking y redacción final.}
+\label{fig:ai-scientist-arch}
+\end{figure}
+	&\\&\\\hline
+\end{tabular}
+
+
+\uselandscape
+\section*{RÚBRICA}
+%\noindent
+\begin{table}[h!]
+\scriptsize
+\begin{tabular}{|p{0.19\textwidth}|p{0.175\textwidth}|p{0.175\textwidth}|p{0.175\textwidth}|p{0.175\textwidth}|}
+  \cline{2-5}
+  \multicolumn{1}{p{0.19\textwidth}}{}&\multicolumn{4}{|c|}{Valores}\\\hline
+  Indicadores&{\centering Destacado (10 pts)}&{\centering Competente (8 pts)}&{\centering Básico\newline (6 pts)}&{\centering En Desarrollo\newline (2 pts)}\\\hline
+
+Presentación y Formato (Grupal) &Presentación impecable, bien organizada, en el tiempo y sin errores tipográficos. &Buena presentación, mayormente organizada y con pocos errores tipográficos.&Presentación aceptable, pero con errores tipográficos o de organización.&Presentación desorganizada o con numerosos errores.\\\hline
+
+
+Comprensión del tema (Grupal) &Contexto claramente definido, objetivo bien formulado y justificación del estudio detallada.&Contexto definido y objetivo formulado, justificación adecuada.&Contexto y objetivo presentes pero poco claros, justificación insuficiente.&Faltan contexto, objetivo o justificación.\\\hline %\newline\vspace{0pt}\\\hline
+ 
+Análisis  (Grupal) & Descompone el tema en sus partes constitutivas, identificando relaciones causa-efecto y patrones.& Identifica relaciones causa-efecto y patrones.& Descompone el tema en sus partes constitutivas &Explicación insuficiente o ausente.\\\hline %\newline\vspace{0pt}\\\hline
+
+Aplicación  (Grupal)&Aplica el conocimiento teórico a situaciones prácticas y muestra problemas de manera creativa.&Aplica el conocimiento teórico a situaciones prácticas.&Muestra problemas aplicados&Explicación insuficiente o ausente\\\hline %\newline\vspace{0pt}\\\hline
+
+Evaluación (Individual) & Evalúa críticamente las diferentes perspectivas y evidencia presentada, identificando fortalezas y debilidades. & Evalúa críticamente las diferentes perspectivas y evidencia presentada.& Identifica fortalezas y debilidades. &Explicación insuficiente o ausente\\\hline %\newline\vspace{0pt}\\\hline
+
+Pensamiento Crítico (Individual) & Analiza rigurosamente la metodología del artículo seleccionado, identifica sesgos y limitaciones metodológicas, y contrasta sus hallazgos y aportes reales con otras fuentes de forma argumentada. & Analiza la metodología del artículo e identifica sesgos o limitaciones relevantes de forma argumentada. & Identifica al menos una limitación o sesgo del artículo revisado, sin mayor argumentación. &Explicación insuficiente o ausente\\\hline %\newline\vspace{0pt}\\\hline
+
+Claridad y coherencia (Individual) &Presenta las ideas de manera clara, concisa y lógica, utilizando un lenguaje apropiado.&Resultados claros y bien interpretados, con buena discusión.&Utiliza un lenguaje apropiado & Explicación insuficiente o ausente.\\\hline %\newline\vspace{0pt}\\\hline
+
+Originalidad (Individual) &Ideas presentadas de forma clara y detallada, con buena interpretación y discusión.&Conclusión clara y bien relacionada con los objetivos.&Conclusión presente pero poco clara o insuficientemente relacionada con los objetivos.&Conclusión ausente o irrelevante.\\\hline %\newline\vspace{0pt}\\\hline
+
+ %\newline\vspace{0pt}\\\hline
+  %&&&&&&\\\hline
+\end{tabular}
+\end{table}
+\useportrait
+\section*{ESCALA DE NOTAS}
+\begin{longtable}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
+\hline
+\textbf{Puntaje}&\textbf{Nota}&\textbf{Puntaje}&\textbf{Nota}\\\hline
+\endfirsthead
+\hline
+\textbf{Puntaje}&\textbf{Nota}&\textbf{Puntaje}&\textbf{Nota}\\\hline
+\endhead
+\hline
+\endfoot
+0	&\color{red}{1,0}	&41	&\color{red}{3,6}\\ \hline
+1	&\color{red}{1,1}	&42	&\color{red}{3,6}\\ \hline
+2	&\color{red}{1,1}	&43	&\color{red}{3,7}\\ \hline
+3	&\color{red}{1,2}	&44	&\color{red}{3,8}\\ \hline
+4	&\color{red}{1,3}	&45	&\color{red}{3,8}\\ \hline
+5	&\color{red}{1,3}	&46	&\color{red}{3,9}\\ \hline
+6	&\color{red}{1,4}	&47	&\color{red}{3,9}\\ \hline
+7	&\color{red}{1,4}	&48	&4,0\\ \hline
+8	&\color{red}{1,5}	&49	&4,1\\ \hline
+9	&\color{red}{1,6}	&50	&4,2\\ \hline
+10	&\color{red}{1,6}	&51	&4,3\\ \hline
+11	&\color{red}{1,7}	&52	&4,4\\ \hline
+12	&\color{red}{1,8}	&53	&4,5\\ \hline
+13	&\color{red}{1,8}	&54	&4,6\\ \hline
+14	&\color{red}{1,9}	&55	&4,7\\ \hline
+15	&\color{red}{1,9}	&56	&4,8\\ \hline
+16	&\color{red}{2,0}	&57	&4,8\\ \hline
+17	&\color{red}{2,1}	&58	&4,9\\ \hline
+18	&\color{red}{2,1}	&59	&5,0\\ \hline
+19	&\color{red}{2,2}	&60	&5,1\\ \hline
+20	&\color{red}{2,3}	&61	&5,2\\ \hline
+21	&\color{red}{2,3}	&62	&5,3\\ \hline
+22	&\color{red}{2,4}	&63	&5,4\\ \hline
+23	&\color{red}{2,4}	&64	&5,5\\ \hline
+24	&\color{red}{2,5}	&65	&5,6\\ \hline
+25	&\color{red}{2,6}	&66	&5,7\\ \hline
+26	&\color{red}{2,6}	&67	&5,8\\ \hline
+27	&\color{red}{2,7}	&68	&5,9\\ \hline
+28	&\color{red}{2,8}	&69	&6,0\\ \hline
+29	&\color{red}{2,8}	&70	&6,1\\ \hline
+30	&\color{red}{2,9}	&71	&6,2\\ \hline
+31	&\color{red}{2,9}	&72	&6,3\\ \hline
+32	&\color{red}{3,0}	&73	&6,3\\ \hline
+33	&\color{red}{3,1}	&74	&6,4\\ \hline
+34	&\color{red}{3,1}	&75	&6,5\\ \hline
+35	&\color{red}{3,2}	&76	&6,6\\ \hline
+36	&\color{red}{3,3}	&77	&6,7\\ \hline
+37	&\color{red}{3,3}	&78	&6,8\\ \hline
+38	&\color{red}{3,4}	&79	&6,9\\ \hline
+39	&\color{red}{3,4}	&80	&7,0\\ \hline
+40	&\color{red}{3,5}	&	&\\ \hline
+\end{longtable}
+\end{document}
